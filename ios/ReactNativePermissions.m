@@ -26,25 +26,14 @@
   #import "RCTConvert.h"
 #endif
 
-#if __has_include(<React/RCTEventDispatcher.h>)
-  #import <React/RCTEventDispatcher.h>
-#elif __has_include("React/RCTEventDispatcher.h")
-  #import "React/RCTEventDispatcher.h"
-#else
-  #import "RCTEventDispatcher.h"
-#endif
-
 #import "RNPLocation.h"
 #import "RNPBluetooth.h"
 #import "RNPNotification.h"
 #import "RNPAudioVideo.h"
-#import "RNPEvent.h"
 #import "RNPPhoto.h"
 #import "RNPContacts.h"
 #import "RNPBackgroundRefresh.h"
-#import "RNPSpeechRecognition.h"
 #import "RNPMediaLibrary.h"
-#import "RNPMotion.h"
 
 
 @interface ReactNativePermissions()
@@ -130,12 +119,6 @@ RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id
         case RNPTypeContacts:
             status = [RNPContacts getStatus];
             break;
-        case RNPTypeEvent:
-            status = [RNPEvent getStatus:@"event"];
-            break;
-        case RNPTypeReminder:
-            status = [RNPEvent getStatus:@"reminder"];
-            break;
         case RNPTypeBluetooth:
             status = [RNPBluetooth getStatus];
             break;
@@ -145,14 +128,8 @@ RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id
         case RNPTypeBackgroundRefresh:
             status = [RNPBackgroundRefresh getStatus];
             break;
-        case RNPTypeSpeechRecognition:
-            status = [RNPSpeechRecognition getStatus];
-            break;
         case RNPTypeMediaLibrary:
             status = [RNPMediaLibrary getStatus];
-            break;
-        case RNPTypeMotion:
-            status = [RNPMotion getStatus];
             break;
         default:
             break;
@@ -176,20 +153,12 @@ RCT_REMAP_METHOD(requestPermission, permissionType:(RNPType)type json:(id)json r
             return [RNPPhoto request:resolve];
         case RNPTypeContacts:
             return [RNPContacts request:resolve];
-        case RNPTypeEvent:
-            return [RNPEvent request:@"event" completionHandler:resolve];
-        case RNPTypeReminder:
-            return [RNPEvent request:@"reminder" completionHandler:resolve];
         case RNPTypeBluetooth:
             return [self requestBluetooth:resolve];
         case RNPTypeNotification:
             return [self requestNotification:json resolve:resolve];
-        case RNPTypeSpeechRecognition:
-            return [RNPSpeechRecognition request:resolve];
         case RNPTypeMediaLibrary:
             return [RNPMediaLibrary request:resolve];
-        case RNPTypeMotion:
-            return [RNPMotion request:resolve];
         default:
             break;
     }
